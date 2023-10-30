@@ -46,3 +46,6 @@ jobs:
 
       - name: DB MIGRATION
         run: php artisan migrate 
+        
+      - name: optimization
+        run: php artisan optimize
