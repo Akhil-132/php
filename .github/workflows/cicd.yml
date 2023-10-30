@@ -44,4 +44,5 @@ jobs:
       - name: Run PHPUnit Tests
         run: ./vendor/bin/phpunit
 
-    
+      - name: DB MIGRATION
+        run: php artisan migrate 
