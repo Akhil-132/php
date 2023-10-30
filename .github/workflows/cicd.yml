@@ -1,0 +1,72 @@
+name: Laravel CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+
+      - name: Install Composer Dependencies
+        run: composer install
+
+      - name: Copy Environment File
+        run: cp .env.example .env
+
+      - name: Generate Application Key
+        run: php artisan key:generate
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+
+      - name: Install Composer Dependencies
+        run: composer install
+
+      - name: Run PHPUnit Tests
+        run: ./vendor/bin/phpunit
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+
+      - name: Install Composer Dependencies
+        run: composer install
+
+      - name: Deploy to Your Hosting Server
+        run: |
+          # Add your deployment commands here
+          # For example, use SSH to deploy to a server
+          # You may need to add your server credentials as GitHub secrets
+          ssh user@your-server "cd /path/to/your/laravel/app && git pull origin main && composer install && php artisan migrate && php artisan optimize"
+
